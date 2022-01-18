@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget Harness</title>
+  <style type="text/css">
+    iframe {
+        display: block;
+        width: 60%;
+        height: 60%;
+        min-height: 650px;
+        margin: 0 auto;
+    }
+
+    #wizzleAppLoader {clear:both; float:none; position: relative;}
+    #wizzleAppLoader #loading-screen{position: absolute !important;}
+    #wizzleAppLoader #webapp{position: relative !important;}
+  </style>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script>
+      function startWizzleApp(json){
+          var mtx = jQuery("<script/>").text(json.data);
+          var css = jQuery("<style/>").text(json.css);
+          var fnt = jQuery("<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&amp;subset=latin&amp;lang=en' type='text/css'/>");
+          var cde = jQuery("<script/>").attr('src', json.script).attr('crossorigin', true);
+          jQuery('#wizzleAppLoader').html(json.html);
+          jQuery('head').append(mtx);
+          jQuery('head').append(css);
+          jQuery('head').append(fnt);
+          jQuery('body').append(cde);
+      }
+      jQuery(document).ready(function($){
+          jQuery.ajax({
+              async: true,
+              url: 'https://www.wizzle.co.uk/webapp/wizzle/load',
+              headers: {'x-wizzle-auth' : 'API_KEY_HERE'},
+              dataType: 'jsonp'
+          });
+      });
+  </script>
+  <script src="https://www.carwow.co.uk/widget/sell-your-car/index.js" async defer></script>
+
+</head>
+
+<body>
+  This page embeds three versions of the wizzle/carwow widget to allow testing.
+
+  <hr>
+
+  <h2>Wizzle Widget</h2>
+
+  <div id="wizzleAppLoader"></div>
+  <hr>
+
+  <h2>Carwow Widget - HTML</h2>
+
+  <div id="CarwowWidget" data-carwow-aff-id="paul">Loading, please wait...</div>
+  <hr>
+
+  <h2>Carwow Widget - iFrame</h2>
+
+  <div id="CarwowWidetIFrame">
+    <iframe src="https://www.carwow.co.uk/widget/sell-your-car/widget.html?no-redirect=true&carwow-aff-id=paul" title="Carwow Sell Your Car"></iframe>
+  </div>
+</body>
+
+</html>
